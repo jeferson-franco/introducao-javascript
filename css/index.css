@@ -132,3 +132,15 @@ button[disabled=disabled], button:disabled {
 .campo-invalido{
 	border: 1px solid red;
 }
+
+/*
+CSS background-color Property.
+[sintaxe] background-color: color|transparent|initial|inherit;
+color define cor de fundo do elemento.
+transparent define cor de fundo transparente, valor padrão.
+initial define cor de fundo para seu valor padrão.
+inherit recebe de herança cor de fundo do elemento pai.
+*/
+.paciente-invalido{
+	background-color: lightcoral;
+}
