@@ -10,21 +10,21 @@ lança exceção SYNTAX_ERR se seletor for inválido.
 */
 var titulo = document.querySelector(".titulo"); //seleciona titulo
 console.log(titulo); //imprime tag <h1> do titulo alterado
-console.log(titulo.textContent); //imprime string do titulo original 'Aparecida Nutrição'
+console.log(titulo.textContent); //imprime texto do titulo original 'Aparecida Nutrição'
 
 /*
 HTML DOM textContent Property.
 [sintaxe]
 - node.textContent //retorna conteúdo de texto do elemento.
 - node.textContent = text //define conteúdo de texto do elemento.
-retorna string, com texto do elemento e de todos os descendentes.
+retorna texto do elemento e de todos os descendentes.
 se o elemento for documento, tipo de documento ou notação, retorna null.
 .innerText retorna apenas o texto, sem espaçamento e tags de elemento interno.
 .innerHTML retorna o texto, incluindo todas as tags de espaçamento e elementos internos.
 .textContent retorna o texto com espaçamento, mas sem tags de elemento interno.
 */
-titulo.textContent = "Aparecida Nutricionista"; //altera string do titulo
-console.log(titulo.textContent); //imprime string do titulo alterado 'Aparecida Nutricionista'
+titulo.textContent = "Aparecida Nutricionista"; //altera texto do titulo
+console.log(titulo.textContent); //imprime texto do titulo alterado 'Aparecida Nutricionista'
 
 var pacienteLista = document.querySelectorAll('.paciente'); //seleciona lista de pacientes
 console.log(pacienteLista); //imprime tags <tr> e tag-filhos <td>
@@ -49,14 +49,14 @@ for (var i = 0; i < pacienteLista.length; i++) { //loop na lista de pacientes
     var paciente = pacienteLista[i]; //define atalho para cada paciente da lista
 
     var tdPeso = paciente.querySelector('.info-peso'); //seleciona coluna do peso
-    var peso = tdPeso.textContent; //define peso com string coletada da coluna
+    var peso = tdPeso.textContent; //define peso com texto coletado da coluna
     console.log(tdPeso); //imprime tag <td> do peso
-    console.log(peso); //imprime string do peso '100'
+    console.log(peso); //imprime texto do peso '100'
     
     var tdAltura = paciente.querySelector('.info-altura'); //seleciona coluna da altura
-    var altura = tdAltura.textContent; //define altura com string coletada da coluna
+    var altura = tdAltura.textContent; //define altura com texto coletado da coluna
     console.log(tdAltura); //imprime tag <td> da altura
-    console.log(altura); //imprime string da altura '2.00'
+    console.log(altura); //imprime texto da altura '2.00'
     
     var tdImc = paciente.querySelector('.info-imc'); //seleciona coluna do IMC
     
@@ -80,7 +80,7 @@ for (var i = 0; i < pacienteLista.length; i++) { //loop na lista de pacientes
     */
     if (peso <= 0 || peso >= 1000) { //verifica se peso é menor que zero ou maior que mil
         pesoValido = false; //define peso como inválido
-        tdImc.textContent = "peso inválido"; //altera string do peso
+        tdImc.textContent = "peso inválido"; //altera texto do peso
         
         /*
         HTML DOM classList Property.
@@ -104,7 +104,7 @@ for (var i = 0; i < pacienteLista.length; i++) { //loop na lista de pacientes
 
     if (altura <= 0 || altura >= 3) { //verifica se altura é menor que zero ou maior que três
         alturaValida = false; //define altura como inválida
-        tdImc.textContent = "altura inválida"; //altera string da altura
+        tdImc.textContent = "altura inválida"; //altera texto da altura
 
         paciente.classList.add("paciente-invalido"); //adiciona classe cor-de-fundo ao paciente
         console.log("altura inválida"); //imprime aviso se altura for menor que zero ou maior que três
@@ -116,14 +116,90 @@ for (var i = 0; i < pacienteLista.length; i++) { //loop na lista de pacientes
         /*
         JS Number toFixed().
         [sintaxe] number.toFixed(x)
-        converte um número em uma string.
-        arredonda a string para um número de decimais.
-        se o número de decimais for maior que o número, zeros serão adicionados.
+        converte número em texto.
+        arredonda texto para determinado número de decimais.
+        se número de decimais for maior que o número, zeros serão adicionados.
         */
         tdImc.textContent = imc.toFixed(2); //atualiza IMC calculado e arredonda duas casas decimais
         console.log(imc); //imprime imc
     } else { //caso contrário da validação de peso e altura
-        tdImc.textContent = "Altura e/ou peso inválidos"; //altera string do IMC
+        tdImc.textContent = "Altura e/ou peso inválidos"; //altera texto do IMC
     }
 
 }
+
+var botaoAdicionar = document.querySelector("#adicionar-paciente"); //seleciona botão Adicionar
+console.log(botaoAdicionar); //imprime tag <button>
+
+/*
+HTML DOM addEventListener() Method.
+[sintaxe] element.addEventListener(event, function, useCapture)
+document.addEventListener() //anexa manipulador de eventos ao elemento.
+removeEventListener() //remove manipulador de eventos que foi anexado.
+event [obrigatório] texto que define nome do evento (use "click" ao invés de "onclick").
+function [obrigatório] define função para executar quando evento ocorrer.
+- quando evento ocorrer, objeto do evento é passado para função como primeiro parâmetro.
+- tipo do objeto depende do evento definido (ex: evento "click" pertence ao objeto MouseEvent).
+useCapture [opcional] se verdadeiro, manipulador do evento executa na fase de captura.
+- se falso [padrão], manipulador do evento executa na fase de borbulhamento.
+*/
+botaoAdicionar.addEventListener("click", function(event) { //escuta "click" do botão
+
+    /*
+    preventDefault() Event Method.
+    [sintaxe] event.preventDefault()
+    cancela evento se for cancelável, ação padrão que pertence ao evento não ocorrerá.
+    - clicar em botão "enviar" impede que envie formulário.
+    - clicar em link impede que link siga URL.
+    nem todos os eventos são canceláveis.
+    stopPropagation() para impedir propagação de evento através do DOM.
+    */
+    event.preventDefault(); //previne botão recarregar página
+    console.log("cliquei no botão"); //imprime aviso de click no botão
+
+    var form = document.querySelector("#form-adiciona"); //seleciona formulário <form>
+
+    /*
+    HTML DOM Input Text value Property.
+    [sintaxe]
+    textObject.value //retorna valor do objeto.
+    textObject.value = text //define valor do objeto.
+    define ou retorna texto do valor atribuído ao objeto.
+    */
+    var nome = form.nome.value; //atribui na variável o valor do nome obtido no formulário
+    var peso = form.peso.value; //atribui na variável o valor do peso obtido no formulário
+    var altura = form.altura.value; //atribui na variável o valor da altura obtida no formulário
+    var gordura = form.gordura.value; //atribui na variável o valor da gordura obtida no formulário
+
+    /*
+    HTML DOM Document createElement().
+    [sintaxe] document.createElement(type)
+    cria novo elemento.
+    */
+    var pacienteTr = document.createElement("tr"); //cria tag <tr> para novo paciente
+    var nomeTd = document.createElement("td"); //cria tag <td> para nome do novo paciente
+    var pesoTd = document.createElement("td"); //cria tag <td> para peso do novo paciente
+    var alturaTd = document.createElement("td"); //cria tag <td> para altura do novo paciente
+    var gorduraTd = document.createElement("td"); //cria tag <td> para gordura do novo paciente
+    var imcTd = document.createElement("td"); //cria tag <td> para imc do novo paciente
+
+    nomeTd.textContent = nome; //define texto do formulário na tag <td> nome
+    pesoTd.textContent = peso; //define texto do formulário na tag <td> peso
+    alturaTd.textContent = altura; //define texto do formulário na tag <td> altura
+    gorduraTd.textContent = gordura; //define texto do formulário na tag <td> gordura
+
+    /*
+    HTML DOM appendChild() Method.
+    [sintaxe] node.appendChild(node)
+    anexa elemento como o último filho de um elemento pai.
+    pode também mover elemento filho de um elemento pai para outro.
+    insertBefore() insere elemento filho antes de outro elemento filho existente.
+    */
+    pacienteTr.appendChild(nomeTd); //adiciona tag <td> nome dentro da tag <tr> paciente
+    pacienteTr.appendChild(pesoTd); //adiciona tag <td> peso dentro da tag <tr> paciente
+    pacienteTr.appendChild(alturaTd); //adiciona tag <td> altura dentro da tag <tr> paciente
+    pacienteTr.appendChild(gorduraTd); //adiciona tag <td> gordura dentro da tag <tr> paciente
+
+    var tabela = document.querySelector("#tabela-pacientes"); //seleciona tabela <tbody>
+    tabela.appendChild(pacienteTr); //adiciona tag <tr> paciente dentro da tabela <tbody>
+});
