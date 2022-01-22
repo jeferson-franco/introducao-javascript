@@ -8,8 +8,8 @@ lança exceção SYNTAX_ERR se seletor for inválido.
 .querySelector() retorna apenas o primeiro elemento dos seletores.
 .querySelectorAll() retorna todas as correspondências.
 */
-var botaoAdicionar = document.querySelector("#adicionar-paciente"); //seleciona botão Adicionar
-console.log(botaoAdicionar); //imprime tag <button>
+var botaoAdicionar = document.querySelector("#adicionar-paciente"); //seleciona <button>
+console.log(botaoAdicionar); //imprime variável
 
 /*
 HTML DOM addEventListener() Method.
@@ -23,7 +23,7 @@ function [obrigatório] define função para executar quando evento ocorrer.
 useCapture [opcional] se verdadeiro, manipulador do evento executa na fase de captura.
 - se falso [padrão], manipulador do evento executa na fase de borbulhamento.
 */
-botaoAdicionar.addEventListener("click", function(event) { //escuta "click" do botão
+botaoAdicionar.addEventListener("click", function(event) { //executa função durante evento escutado
 
     /*
     preventDefault() Event Method.
@@ -34,17 +34,29 @@ botaoAdicionar.addEventListener("click", function(event) { //escuta "click" do b
     nem todos os eventos são canceláveis.
     stopPropagation() para impedir propagação de evento através do DOM.
     */
-    event.preventDefault(); //previne botão recarregar página
-    console.log("cliquei no botão"); //imprime aviso de click no botão
+    event.preventDefault(); //previne evento de atualizar página
+    console.log("cliquei no botão"); //imprime texto
 
-    var form = document.querySelector("#form-adiciona"); //seleciona formulário <form>
-    var paciente = obtemPacienteDoFormulario(form); //declara variável que recebe objeto da função
-    console.log(paciente); //imprime variável do objeto obtido pela função
+    var form = document.querySelector("#form-adiciona"); //seleciona <form>
+    var paciente = obtemPacienteDoFormulario(form); //invoca função e atribui na variável
+    console.log(paciente); //imprime variável
 
-    var pacienteTr = montaTr(paciente); //invoca função para criar tag <tr>
+    if (!validaPaciente(paciente)) { //se função NÃO for válida
+        console.log("paciente inválido"); //imprime texto
+        return; //retorna vazio
+    }
 
-    var tabela = document.querySelector("#tabela-pacientes"); //seleciona tabela <tbody>
-    tabela.appendChild(pacienteTr); //adiciona tag <tr> dentro da tabela <tbody>
+    var pacienteTr = montaTr(paciente); //invoca função e atribui na variável
+
+    var erros = validaPaciente(paciente); //invoca função e atribui na variável
+    console.log(erros); //imprime variável
+    if (erros.length > 0) { //se tamanho do texto maior que zero
+        exibeMensagensDeErro(erros); //invoca função
+        return; //retorna vazio
+    }
+
+    var tabela = document.querySelector("#tabela-pacientes"); //seleciona <tbody>
+    tabela.appendChild(pacienteTr); //insere <tr> dentro de <tbody>
 
     /*
     HTML DOM Form reset() Method.
@@ -52,7 +64,18 @@ botaoAdicionar.addEventListener("click", function(event) { //escuta "click" do b
     redefine valor de todos os elementos do formulário.
     submit() //envia formulário.
     */
-    form.reset();
+    form.reset(); //limpa formulário
+
+    var mensagensErro = document.querySelector("#mensagens-erro"); //seleciona <ul>
+    
+    /*
+    HTML DOM innerHTML Property.
+    [sintaxe]
+    HTMLElementObject.innerHTML //retorna conteúdo HTML.
+    HTMLElementObject.innerHTML = text //define conteúdo HTML.
+    define ou retorna conteúdo HTML interno de elemento.
+    */
+    mensagensErro.innerHTML = ""; //insere vazio na HTML da variável
 });
 
 /*
@@ -70,9 +93,26 @@ dentro da função, argumentos(parâmetros) se comportam como variáveis locais.
 variáveis locais são criadas quando função inicia e excluídas quando função termina.
 quando atinge instrução de return, função para de ser executada.
 */
-function obtemPacienteDoFormulario(form) { //pega valores do <form> e extrai para bloco-objeto
+function exibeMensagensDeErro(erros) { //executa função
+    var ul = document.querySelector("#mensagens-erro"); //seleciona <ul>
+    ul.innerHTML = ""; //insere vazio na HTML da variável
+    
+    /*
+    JS Array forEach() Method.
+    [sintaxe] array.forEach(function(currentValue, index, arr), thisValue)
+    chama função para cada elemento em matriz.
+    não é executado para elementos vazios.
+    */
+    erros.forEach(function(erro) { //para cada variável, executa função
+        var li = document.createElement("li"); //cria <li>
+        li.textContent = erro; //insere texto na <li>
+        ul.appendChild(li); //insere <li> dentro de <ul>
+    });
+}
 
-    var paciente = { //variável-objeto do novo paciente
+function obtemPacienteDoFormulario(form) { //executa função
+
+    var paciente = { //variável
 
         /*
         HTML DOM Input Text value Property.
@@ -81,23 +121,23 @@ function obtemPacienteDoFormulario(form) { //pega valores do <form> e extrai par
         textObject.value = text //define valor do objeto.
         define ou retorna texto do valor atribuído ao objeto.
         */
-        nome: form.nome.value, //propriedade nome do objeto
-        peso: form.peso.value, //propriedade peso do objeto
-        altura: form.altura.value, //propriedade altura do objeto
-        gordura: form.gordura.value, //propriedade gordura do objeto
-        imc: calculaImc(form.peso.value, form.altura.value) //realiza cálculo do imc no objeto
+        nome: form.nome.value, //propriedade atribuída
+        peso: form.peso.value, //propriedade atribuída
+        altura: form.altura.value, //propriedade atribuída
+        gordura: form.gordura.value, //propriedade atribuída
+        imc: calculaImc(form.peso.value, form.altura.value) //invoca função na propriedade
     }
-    return paciente; //retorna objeto paciente com propriedades montadas
+    return paciente; //retorna variável com propriedades montadas
 }
 
-function montaTr(paciente) { //pega valores da variável paciente e extrai para bloco-objeto
+function montaTr(paciente) { //executa função
 
     /*
     HTML DOM Document createElement().
     [sintaxe] document.createElement(type)
     cria novo elemento.
     */
-    var pacienteTr = document.createElement("tr"); //cria tag <tr> para objeto
+    var pacienteTr = document.createElement("tr"); //cria <tr>
 
     /*
     HTML DOM classList Property.
@@ -115,7 +155,7 @@ function montaTr(paciente) { //pega valores da variável paciente e extrai para 
     - element.classList.toggle("classToRemove", false) //remove classe.
     - element.classList.toggle("classToAdd", true) //adiciona classe. 
     */
-    pacienteTr.classList.add("paciente"); //adiciona class na tag <tr> do objeto
+    pacienteTr.classList.add("paciente"); //insere classe na <tr>
 
     /*
     HTML DOM appendChild() Method.
@@ -130,14 +170,58 @@ function montaTr(paciente) { //pega valores da variável paciente e extrai para 
     pacienteTr.appendChild(montaTd(paciente.gordura, "info-gordura")); //monta <td> dentro de <tr>
     pacienteTr.appendChild(montaTd(paciente.imc, "info-imc")); //monta <td> dentro de <tr>
 
-    return pacienteTr; //retorna objeto com propriedades preenchidas
+    return pacienteTr; //retorna variável com propriedades montadas
 }
 
-function montaTd(dado, classe) { //executa bloco para montar tag <td>
+function montaTd(dado, classe) { //executa função
 
-    var td = document.createElement("td"); //cria tag <td>
-    td.textContent = dado; //insere texto na tag <td>
-    td.classList.add(classe); //adiciona classe na tag <td>
+    var td = document.createElement("td"); //cria <td>
+    td.textContent = dado; //insere texto na <td>
+    td.classList.add(classe); //adiciona classe na <td>
 
-    return td; //retorna tag <td> montada com texto e classe
+    return td; //retorna variável com propriedades montadas
+}
+
+function validaPaciente(paciente) { //executa função
+    var erros = []; //cria array
+
+    /*
+    JS Conditions: if...else...else if.
+    [sintaxe]
+    if (condition1) {
+        // bloco de código a ser executado se condition1 for verdadeira.
+    } else if (condition2) {
+        // bloco de código a ser executado se condition1 for falsa e condition2 for verdadeira.
+    } else {
+        // bloco de código a ser executado se condition1 for falsa e condition2 for falsa.
+    }
+    if //executa bloco de código, se condition apontada for verdadeira.
+    else //executa bloco de código, se a mesma condition for falsa.
+    else if //testa a nova condition, se a primeira for falsa.
+    switch //executa muitos blocos alternativos de código.
+    */
+    if (paciente.nome.length == 0) { //se tamanho da variável for igual a zero
+        erros.push("nome inválido") //empurra texto para array
+    }
+
+    if (paciente.gordura.length == 0) { //se tamanho da variável for igual a zero
+        erros.push("gordura inválida"); //empurra texto para array
+    }
+
+    if (paciente.peso.length == 0) { //se tamanho da variável for igual a zero
+        erros.push("peso inválido"); //empurra texto para array
+    }
+
+    if (paciente.altura.length == 0) { //se tamanho da variável for igual a zero
+        erros.push("altura inválida"); //empurra texto para array
+    }
+
+    if (!validaPeso(paciente.peso)) { //se função NÃO for válida
+        erros.push("peso inválido"); //empurra texto para array
+    }
+
+    if (!validaAltura(paciente.altura)) { //se função NÃO for válida
+        erros.push("altura inválida"); //empurra texto para array
+    }
+    return erros; //retorna variável com propriedades montadas
 }

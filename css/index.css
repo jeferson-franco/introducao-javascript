@@ -129,6 +129,14 @@ button[disabled=disabled], button:disabled {
     margin-top: 30px;
 }
 
+/*
+CSS .class Selector.
+[sintaxe]
+.class {
+	css declarations;
+}
+seletor estiliza elemento com HTML class="example".
+*/
 .campo-invalido{
 	border: 1px solid red;
 }
@@ -143,4 +151,16 @@ inherit recebe de herança cor de fundo do elemento pai.
 */
 .paciente-invalido{
 	background-color: lightcoral;
+}
+
+/*
+CSS #id Selector.
+[sintaxe]
+#id {
+	css declarations;
+}
+seletor estiliza elemento com HTML id="example".
+*/
+#mensagens-erro{
+	color: red;
 }
