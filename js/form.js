@@ -23,7 +23,7 @@ function [obrigatório] define função para executar quando evento ocorrer.
 useCapture [opcional] se verdadeiro, manipulador do evento executa na fase de captura.
 - se falso [padrão], manipulador do evento executa na fase de borbulhamento.
 */
-botaoAdicionar.addEventListener("click", function(event) { //executa função durante evento escutado
+botaoAdicionar.addEventListener("click", function(event) { //durante evento escutado, executa função
 
     /*
     preventDefault() Event Method.
