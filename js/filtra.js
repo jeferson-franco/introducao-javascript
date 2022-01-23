@@ -36,7 +36,7 @@ campoFiltro.addEventListener("input", function() { //ao escutar evento, executa 
     em métodos como call() e apply(), pode se referir a qualquer objeto.
     */
     console.log(this.value); //imprime variável da função
-    var pacientes = document.querySelectorAll(".paciente"); //seleciona todas <tr>
+    var pacientes = document.querySelectorAll(".paciente"); //seleciona todas <tr> com classe
 
     /*
     JS Conditions: if...else...else if.
@@ -73,7 +73,7 @@ campoFiltro.addEventListener("input", function() { //ao escutar evento, executa 
         for (var i = 0; i < pacientes.length; i++) { //loop na variável
             var paciente = pacientes[i]; //atribui cada array na variável
             var tdNome = paciente.querySelector(".info-nome"); //seleciona <td>
-            var nome = tdNome.textContent; //define texto na variável
+            var nome = tdNome.textContent; //insere texto na variável
 
             var expressao = new RegExp(this.value, "i"); //cria expressão regular na variável
             if (!expressao.test(nome)) { //se variável NÃO é válida
@@ -106,7 +106,7 @@ campoFiltro.addEventListener("input", function() { //ao escutar evento, executa 
             var paciente = pacientes[i]; //atribui cada array na variável
             paciente.classList.remove("invisivel"); //remove classe da variável
         }
-        
+
     }
     
 });

@@ -8,7 +8,7 @@ lança exceção SYNTAX_ERR se seletor é inválido.
 .querySelector() //retorna apenas o primeiro elemento dos seletores.
 .querySelectorAll() //retorna todas as correspondências.
 */
-var pacientes = document.querySelectorAll(".paciente"); //seleciona todas <tr>
+var pacientes = document.querySelectorAll(".paciente"); //seleciona todas <tr> com classe
 
 /*
 JS Array forEach() Method.
@@ -43,12 +43,12 @@ function //[obrigatório] define função para executar quando evento ocorrer.
 useCapture //[opcional:bool] se verdadeiro, manipulador do evento executa na fase de captura.
 - se falso [padrão], manipulador do evento executa na fase de borbulhamento.
 */
-tabela.addEventListener("dblclick", function(event) { //ao escutar evento, executa função
+tabela.addEventListener("dblclick", function(event) { //ao escutar <tbody>, executa função
     //var alvoEvento = event.target; //atribui evento na variável
     //var paiDoAlvo = alvoEvento.parentNode; //atribui pai do evento na variável
     //paiDoAlvo.remove(); //remove pai do evento
     
-    event.target.parentNode.classList.add("fadeOut"); //insere classe ao evento
+    event.target.parentNode.classList.add("fadeOut"); //insere classe na <tbody>
 
     setTimeout (function () { //ao definir tempo de espera, executa função
         if (event.target.tagName == "TD") { //se evento é <td>

@@ -8,7 +8,7 @@ lança exceção SYNTAX_ERR se seletor é inválido.
 .querySelector() //retorna apenas o primeiro elemento dos seletores.
 .querySelectorAll() //retorna todas as correspondências.
 */
-var titulo = document.querySelector(".titulo"); //seleciona <h1>
+var titulo = document.querySelector(".titulo"); //seleciona <h1> com classe
 console.log(titulo); //imprime variável
 console.log(titulo.textContent); //imprime texto original da variável
 
@@ -26,7 +26,7 @@ se o elemento é documento, tipo de documento ou notação, retorna null.
 titulo.textContent = "Aparecida Nutricionista"; //altera texto da variável
 console.log(titulo.textContent); //imprime texto alterado da variável
 
-var pacienteLista = document.querySelectorAll('.paciente'); //seleciona todas <tr>
+var pacienteLista = document.querySelectorAll(".paciente"); //seleciona todas <tr> com classe
 console.log(pacienteLista); //imprime variável
 
 /*
@@ -45,15 +45,15 @@ while...do/while //percorre bloco de código enquanto condição é verdadeira.
 */
 for (var i = 0; i < pacienteLista.length; i++) { //loop na variável
     console.log(pacienteLista[i]); //imprime cada array na variável
-    var paciente = pacienteLista[i]; //atribui cada array na variável
+    var paciente = pacienteLista[i]; //insere cada array na variável
 
     var tdPeso = paciente.querySelector('.info-peso'); //seleciona <td>
-    var peso = tdPeso.textContent; //define texto na variável
+    var peso = tdPeso.textContent; //insere texto na variável
     console.log(tdPeso); //imprime variável
     console.log(peso); //imprime variável
     
     var tdAltura = paciente.querySelector('.info-altura'); //seleciona <td>
-    var altura = tdAltura.textContent; //define texto na variável
+    var altura = tdAltura.textContent; //insere texto na variável
     console.log(tdAltura); //imprime variável
     console.log(altura); //imprime variável
     
@@ -77,7 +77,7 @@ for (var i = 0; i < pacienteLista.length; i++) { //loop na variável
     switch //executa muitos blocos alternativos de código.
     */
     if (!pesoValido) { //se variável NÃO é válida
-        pesoValido = false; //define variável como inválida
+        pesoValido = false; //insere tipo da variável como inválida
         tdImc.textContent = "peso inválido"; //altera texto da variável
         
         /*
@@ -101,19 +101,19 @@ for (var i = 0; i < pacienteLista.length; i++) { //loop na variável
     }
 
     if (!alturaValida) { //se variável NÃO é válida
-        alturaValida = false; //define variável como inválida
+        alturaValida = false; //insere tipo da variável como inválida
         tdImc.textContent = "altura inválida"; //altera texto da variável
 
         paciente.classList.add("paciente-invalido"); //insere classe na variável
         console.log("altura inválida"); //imprime texto
     }
 
-    if (alturaValida && pesoValido) { //se variáveis são válidas
+    if (alturaValida && pesoValido) { //se variáveis são TODAS válidas
         var imc = calculaImc(peso, altura); //invoca função e atribui na variável
         
-        tdImc.textContent = imc; //define texto na variável
+        tdImc.textContent = imc; //insere texto na variável
         console.log(imc); //imprime variável
-    } else { //se variáveis são inválidas
+    } else { //se ALGUMA variável é inválida
         tdImc.textContent = "Altura e/ou peso inválidos"; //altera texto da variável
     }
 
@@ -140,7 +140,7 @@ quando atinge instrução de return, função para de ser executada.
 */
 function calculaImc(peso, altura) { //executa função
 
-    var imc = 0; //define variável
+    var imc = 0; //insere zero na variável
     imc = peso / (altura * altura); //calcula variável
     
     /*
@@ -150,23 +150,23 @@ function calculaImc(peso, altura) { //executa função
     arredonda texto para determinado número de decimais.
     se número de decimais é maior que o número, zeros são inseridos.
     */
-    return imc.toFixed(2); //retorna variável com valor arredondado
+    return imc.toFixed(2); //finaliza função com variável de valor arredondado
 }
 
 function validaPeso(peso) { //executa função
     if (peso >= 0 && peso <= 1000) { //se variáveis são válidas
-        return true; //retorna variável válida
+        return true; //finaliza função validando variável
     } else { //se variáveis são inválidas
-        return false; //retorna variável inválida
+        return false; //finaliza função invalidando variável
     }
 
 }
 
 function validaAltura(altura) { //executa função
     if (altura >= 0 && altura <= 3.0) { //se variáveis são válidas
-        return true; //retorna variável válida
+        return true; //finaliza função validando variável
     } else { //se variáveis são inválidas
-        return false; //retorna variável inválida
+        return false; //finaliza função invalidando variável
     }
-    
+
 }

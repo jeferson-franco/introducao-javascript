@@ -23,7 +23,7 @@ function //[obrigatório] define função para executar quando evento ocorrer.
 useCapture //[opcional:bool] se verdadeiro, manipulador do evento executa na fase de captura.
 - se falso [padrão], manipulador do evento executa na fase de borbulhamento.
 */
-botaoAdicionar.addEventListener("click", function(event) { //ao escutar evento, executa função
+botaoAdicionar.addEventListener("click", function(event) { //ao escutar <button>, executa função
 
     /*
     preventDefault() Event Method.
@@ -34,7 +34,7 @@ botaoAdicionar.addEventListener("click", function(event) { //ao escutar evento, 
     nem todos os eventos são canceláveis.
     stopPropagation() para impedir propagação de evento através do DOM.
     */
-    event.preventDefault(); //previne evento de atualizar página
+    event.preventDefault(); //impede evento
     console.log("cliquei no botão"); //imprime texto
 
     var form = document.querySelector("#form-adiciona"); //seleciona <form>
@@ -43,7 +43,7 @@ botaoAdicionar.addEventListener("click", function(event) { //ao escutar evento, 
 
     if (!validaPaciente(paciente)) { //se função NÃO é válida
         console.log("paciente inválido"); //imprime texto
-        return; //retorna vazio
+        return; //finaliza função
     }
 
     var pacienteTr = montaTr(paciente); //invoca função e atribui na variável
@@ -52,11 +52,13 @@ botaoAdicionar.addEventListener("click", function(event) { //ao escutar evento, 
     console.log(erros); //imprime variável
     if (erros.length > 0) { //se tamanho da variável maior que zero
         exibeMensagensDeErro(erros); //invoca função
-        return; //retorna vazio
+        return; //finaliza função
     }
 
     var tabela = document.querySelector("#tabela-pacientes"); //seleciona <tbody>
     tabela.appendChild(pacienteTr); //insere <tr> dentro de <tbody>
+
+    adicionaPacienteNaTabela(paciente); //invoca função
 
     /*
     HTML DOM Form reset() Method.
@@ -75,7 +77,7 @@ botaoAdicionar.addEventListener("click", function(event) { //ao escutar evento, 
     HTMLElementObject.innerHTML = text //define conteúdo HTML.
     define ou retorna conteúdo HTML interno de elemento.
     */
-    mensagensErro.innerHTML = ""; //insere vazio na HTML da variável
+    mensagensErro.innerHTML = ""; //insere vazio na HTML da <ul>
 });
 
 /*
@@ -95,7 +97,7 @@ quando atinge instrução de return, função para de ser executada.
 */
 function exibeMensagensDeErro(erros) { //executa função
     var ul = document.querySelector("#mensagens-erro"); //seleciona <ul>
-    ul.innerHTML = ""; //insere vazio na HTML da variável
+    ul.innerHTML = ""; //insere vazio na HTML da <ul>
     
     /*
     JS Array forEach() Method.
@@ -108,7 +110,7 @@ function exibeMensagensDeErro(erros) { //executa função
         li.textContent = erro; //insere texto na <li>
         ul.appendChild(li); //insere <li> dentro de <ul>
     });
-    
+
 }
 
 function obtemPacienteDoFormulario(form) { //executa função
@@ -122,14 +124,14 @@ function obtemPacienteDoFormulario(form) { //executa função
         textObject.value = text //define valor do objeto.
         define ou retorna texto do valor atribuído ao objeto.
         */
-        nome: form.nome.value, //propriedade atribuída
-        peso: form.peso.value, //propriedade atribuída
-        altura: form.altura.value, //propriedade atribuída
-        gordura: form.gordura.value, //propriedade atribuída
-        imc: calculaImc(form.peso.value, form.altura.value) //invoca função na propriedade
+        nome: form.nome.value, //insere valor
+        peso: form.peso.value, //insere valor
+        altura: form.altura.value, //insere valor
+        gordura: form.gordura.value, //insere valor
+        imc: calculaImc(form.peso.value, form.altura.value) //invoca função
     }
 
-    return paciente; //retorna variável com propriedades montadas
+    return paciente; //finaliza função com variável montada
 }
 
 function montaTr(paciente) { //executa função
@@ -172,7 +174,7 @@ function montaTr(paciente) { //executa função
     pacienteTr.appendChild(montaTd(paciente.gordura, "info-gordura")); //monta <td> dentro de <tr>
     pacienteTr.appendChild(montaTd(paciente.imc, "info-imc")); //monta <td> dentro de <tr>
 
-    return pacienteTr; //retorna variável com propriedades montadas
+    return pacienteTr; //finaliza função com variável montada
 }
 
 function montaTd(dado, classe) { //executa função
@@ -181,7 +183,7 @@ function montaTd(dado, classe) { //executa função
     td.textContent = dado; //insere texto na <td>
     td.classList.add(classe); //insere classe na <td>
 
-    return td; //retorna variável com propriedades montadas
+    return td; //finaliza função com variável montada
 }
 
 function validaPaciente(paciente) { //executa função
@@ -226,5 +228,11 @@ function validaPaciente(paciente) { //executa função
         erros.push("altura inválida"); //empurra texto para array
     }
 
-    return erros; //retorna variável com propriedades montadas
+    return erros; //finaliza função com variável montada
+}
+
+function adicionaPacienteNaTabela(paciente) { //executa função
+    var pacienteTr = montaTr(paciente); //invoca função
+    var tabela = document.querySelector("#tabela-pacientes"); //seleciona <tbody>
+    tabela.appendChild(pacienteTr); //monta <tr> dentro de <tbody>
 }
