@@ -3,10 +3,10 @@ HTML DOM querySelector() Method.
 [sintaxe] document.querySelector(CSS selectors)
 retorna objeto NodeList, com primeiro elemento dos seletores CSS (separado por vírgula).
 seletor CSS seleciona elemento HTML através de id, class, type, attribute, value etc.
-se nenhuma correspondência for encontrada, retorna null.
-lança exceção SYNTAX_ERR se seletor for inválido.
-.querySelector() retorna apenas o primeiro elemento dos seletores.
-.querySelectorAll() retorna todas as correspondências.
+se nenhuma correspondência é encontrada, retorna null.
+lança exceção SYNTAX_ERR se seletor é inválido.
+.querySelector() //retorna apenas o primeiro elemento dos seletores.
+.querySelectorAll() //retorna todas as correspondências.
 */
 var botaoAdicionar = document.querySelector("#adicionar-paciente"); //seleciona <button>
 console.log(botaoAdicionar); //imprime variável
@@ -16,19 +16,19 @@ HTML DOM addEventListener() Method.
 [sintaxe] element.addEventListener(event, function, useCapture)
 document.addEventListener() //anexa manipulador de eventos ao elemento.
 removeEventListener() //remove manipulador de eventos que foi anexado.
-event [obrigatório] texto que define nome do evento (use "click" ao invés de "onclick").
-function [obrigatório] define função para executar quando evento ocorrer.
+event //[obrigatório] define evento (use "click" ao invés de "onclick").
+function //[obrigatório] define função para executar quando evento ocorrer.
 - quando evento ocorrer, objeto do evento é passado para função como primeiro parâmetro.
 - tipo do objeto depende do evento definido (ex: evento "click" pertence ao objeto MouseEvent).
-useCapture [opcional] se verdadeiro, manipulador do evento executa na fase de captura.
+useCapture //[opcional:bool] se verdadeiro, manipulador do evento executa na fase de captura.
 - se falso [padrão], manipulador do evento executa na fase de borbulhamento.
 */
-botaoAdicionar.addEventListener("click", function(event) { //durante evento escutado, executa função
+botaoAdicionar.addEventListener("click", function(event) { //ao escutar evento, executa função
 
     /*
     preventDefault() Event Method.
     [sintaxe] event.preventDefault()
-    cancela evento se for cancelável, ação padrão que pertence ao evento não ocorrerá.
+    cancela evento se cancelável, ação padrão que pertence ao evento não ocorrerá.
     - clicar em botão "enviar" impede que envie formulário.
     - clicar em link impede que link siga URL.
     nem todos os eventos são canceláveis.
@@ -41,7 +41,7 @@ botaoAdicionar.addEventListener("click", function(event) { //durante evento escu
     var paciente = obtemPacienteDoFormulario(form); //invoca função e atribui na variável
     console.log(paciente); //imprime variável
 
-    if (!validaPaciente(paciente)) { //se função NÃO for válida
+    if (!validaPaciente(paciente)) { //se função NÃO é válida
         console.log("paciente inválido"); //imprime texto
         return; //retorna vazio
     }
@@ -50,7 +50,7 @@ botaoAdicionar.addEventListener("click", function(event) { //durante evento escu
 
     var erros = validaPaciente(paciente); //invoca função e atribui na variável
     console.log(erros); //imprime variável
-    if (erros.length > 0) { //se tamanho do texto maior que zero
+    if (erros.length > 0) { //se tamanho da variável maior que zero
         exibeMensagensDeErro(erros); //invoca função
         return; //retorna vazio
     }
@@ -108,6 +108,7 @@ function exibeMensagensDeErro(erros) { //executa função
         li.textContent = erro; //insere texto na <li>
         ul.appendChild(li); //insere <li> dentro de <ul>
     });
+    
 }
 
 function obtemPacienteDoFormulario(form) { //executa função
@@ -127,6 +128,7 @@ function obtemPacienteDoFormulario(form) { //executa função
         gordura: form.gordura.value, //propriedade atribuída
         imc: calculaImc(form.peso.value, form.altura.value) //invoca função na propriedade
     }
+
     return paciente; //retorna variável com propriedades montadas
 }
 
@@ -142,18 +144,18 @@ function montaTr(paciente) { //executa função
     /*
     HTML DOM classList Property.
     [sintaxe] element.classList
-    .add(class1,class2,...) //adiciona uma ou mais classes ao elemento.
-    .contains(class) //se elemento possui a classe, retorna verdadeiro (caso contrário, falso).
-    .item(index) //retorna a classe com número-índice do elemento (a partir de zero).
-    - se índice estiver fora do alcance, retorna null.
-    .remove(class1,class2,...) //remove uma ou mais classes ao elemento.
+    add(class1,class2,...) //insere uma ou mais classes ao elemento.
+    contains(class) //[bool] se verdadeiro, elemento possui a classe.
+    item(index) //com número-índice (a partir de zero), retorna classe.
+    - se número-índice estiver fora do alcance, retorna null.
+    remove(class1,class2,...) //remove uma ou mais classes do elemento.
     - remover classe que não existe, NÃO retorna erro.
-    .toggle(class,true|false) //alterna entre classe do elemento.
+    toggle(class,true|false) //alterna entre classes do elemento.
     - primeiro parâmetro remove classe do elemento, e retorna falso.
-    - se classe não existir, é adicionada ao elemento, e retorna verdadeiro.
-    - segundo parâmetro força classe ser adicionada ou removida, independente de existir.
-    - element.classList.toggle("classToRemove", false) //remove classe.
-    - element.classList.toggle("classToAdd", true) //adiciona classe. 
+    - se classe não existir, é inserida ao elemento, e retorna verdadeiro.
+    - segundo parâmetro força classe ser inserida ou removida, independente de existir.
+    element.classList.toggle("classToRemove", false) //remove classe.
+    element.classList.toggle("classToAdd", true) //adiciona classe. 
     */
     pacienteTr.classList.add("paciente"); //insere classe na <tr>
 
@@ -177,7 +179,7 @@ function montaTd(dado, classe) { //executa função
 
     var td = document.createElement("td"); //cria <td>
     td.textContent = dado; //insere texto na <td>
-    td.classList.add(classe); //adiciona classe na <td>
+    td.classList.add(classe); //insere classe na <td>
 
     return td; //retorna variável com propriedades montadas
 }
@@ -189,39 +191,40 @@ function validaPaciente(paciente) { //executa função
     JS Conditions: if...else...else if.
     [sintaxe]
     if (condition1) {
-        // bloco de código a ser executado se condition1 for verdadeira.
+        //executa bloco de código se condition1 é verdadeira.
     } else if (condition2) {
-        // bloco de código a ser executado se condition1 for falsa e condition2 for verdadeira.
+        //executa bloco de código se condition1 é falsa e condition2 é verdadeira.
     } else {
-        // bloco de código a ser executado se condition1 for falsa e condition2 for falsa.
+        //executa bloco de código se condition1 é falsa e condition2 é falsa.
     }
-    if //executa bloco de código, se condition apontada for verdadeira.
-    else //executa bloco de código, se a mesma condition for falsa.
-    else if //testa a nova condition, se a primeira for falsa.
+    if //executa bloco de código, se condition apontada é verdadeira.
+    else //executa bloco de código, se a mesma condition é falsa.
+    else if //testa nova condition, se a primeira é falsa.
     switch //executa muitos blocos alternativos de código.
     */
-    if (paciente.nome.length == 0) { //se tamanho da variável for igual a zero
+    if (paciente.nome.length == 0) { //se tamanho da variável é igual a zero
         erros.push("nome inválido") //empurra texto para array
     }
 
-    if (paciente.gordura.length == 0) { //se tamanho da variável for igual a zero
+    if (paciente.gordura.length == 0) { //se tamanho da variável é igual a zero
         erros.push("gordura inválida"); //empurra texto para array
     }
 
-    if (paciente.peso.length == 0) { //se tamanho da variável for igual a zero
+    if (paciente.peso.length == 0) { //se tamanho da variável é igual a zero
         erros.push("peso inválido"); //empurra texto para array
     }
 
-    if (paciente.altura.length == 0) { //se tamanho da variável for igual a zero
+    if (paciente.altura.length == 0) { //se tamanho da variável é igual a zero
         erros.push("altura inválida"); //empurra texto para array
     }
 
-    if (!validaPeso(paciente.peso)) { //se função NÃO for válida
+    if (!validaPeso(paciente.peso)) { //se função NÃO é válida
         erros.push("peso inválido"); //empurra texto para array
     }
 
-    if (!validaAltura(paciente.altura)) { //se função NÃO for válida
+    if (!validaAltura(paciente.altura)) { //se função NÃO é válida
         erros.push("altura inválida"); //empurra texto para array
     }
+
     return erros; //retorna variável com propriedades montadas
 }
